@@ -17,7 +17,7 @@ const chainMaker = {
   removeLink(position) {
     if (this.arr[position - 1]) {
       this.arr = this.arr.filter(e => this.arr.indexOf(e) !== (position - 1));
-      // this.chain.splice(position - 1, 1);
+      // this.arr.splice(position - 1, 1);
       return this;
     }
     this.arr = [];
