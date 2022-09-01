@@ -22,9 +22,41 @@ const { NotImplementedError } = require('../extensions/index.js');
  * }
  *
  */
-function getDNSStats(/* domains */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+function getDNSStats(domains) {
+  let result = {};
+  let count = 0;
+  const arrays = domains.map(e => e.split('.').reverse());
+  const reversedDomains = arrays.map(e => e.join('.'));
+  
+  function getDomain() {
+    let arr = [];
+    for (let i = 0; i < arrays.length; i++) {
+      for (let j = 1; j <= arrays[i].length; j++) {
+        const element = arrays[i].slice(0, j).join('.');
+        if (!arr.includes(element)) {
+          arr.push(element);
+        }
+      }
+    };
+    for (let i = 0; i < arr.length; i++) {
+      countDomains(arr[i]);
+    };
+  }
+  getDomain();
+
+  function countDomains(domain) {
+    for (let i = 0; i < reversedDomains.length; i++) {
+      if (reversedDomains[i].includes(domain)) {
+        count++;
+      }
+      if (!result.hasOwnProperty(domain)) {
+        result[`.${domain}`] = count;
+      }
+    };
+    count = 0;
+  };
+
+  return result;
 }
 
 module.exports = {
